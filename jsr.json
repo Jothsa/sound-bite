@@ -1,0 +1,8 @@
+{
+  "$schema": "https://jsr.io/schema/config-file.v1.json",
+  "name": "@jothsa/sound-bite",
+  "version": "0.0.1",
+  "exclude": ["./src/assets/*"],
+  "include": ["./src/sound-bite.ts", "LICENSE.md", "README.md"],
+  "exports": "./src/sound-bite.ts"
+}

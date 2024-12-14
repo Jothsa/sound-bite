@@ -1,5 +1,5 @@
 {
-  "name": "sound-bite",
+  "name": "@jothsa/sound-bite",
   "private": false,
   "version": "0.0.0",
   "type": "module",

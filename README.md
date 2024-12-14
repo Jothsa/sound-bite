@@ -1,6 +1,6 @@
 # Sound-Bite
 
-A web component for simply and performantly adding inline sound bites.
+A web component for simply, performantly, and accessibly adding inline sound bites.
 
 ## Usage
 

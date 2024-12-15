@@ -3,8 +3,10 @@
   "private": false,
   "version": "0.0.0",
   "type": "module",
-  "main": "sound-bite.js",
-  "module": "sound-bite.js",
+  "exports": {
+    ".": "./src/sound-bite.js",
+    "./soundBiteClass.js": "./src/soundBiteClass.js"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

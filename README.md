@@ -48,6 +48,7 @@ These are set on the `sound-bite` element.
 
 src - The URL of the audio file to play.
 name - The name of the sound bite. This will be used in the `aria-label` attribute of the button.
+
 prefetchStrategy: "hover" | "intersection" | "load" (default: "intersection) - when to load the audio file. Either when the element is hovered over, when it is in view, or when the component is first connected to the dom. If the file is not loaded, clicking the button will have no effect.
 
 audioState: "playing" | "paused" - The current state of the audio. This is a read-only attribute and should not be modified by the user.
@@ -83,11 +84,17 @@ pause-icon - The icon to be displayed to pause the sound (it will be displayed w
 This web component exposes several custom properties to allow custom styling.
 
 `--bg-block-offset` - the block offset of the background
+
 `--bg-color` - the color of the background.
+
 `--bg-height` - the height of the background
+
 `--initial-bg-inline-size` - the initial background size
+
 `--initial-padding` - the padding between the initial bg and the icon/text
+
 `--focus-outline` - the focus outline
+
 `--focus-outline-offset` - the focus outline offset
 
 ## Further Customization

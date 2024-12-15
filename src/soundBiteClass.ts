@@ -1,4 +1,4 @@
-import { CSSResult, LitElement, css, html } from "lit";
+import { CSSResult, HTMLTemplateResult, LitElement, css, html } from "lit";
 import { property, state } from "lit/decorators.js";
 import { Task } from "@lit/task";
 
@@ -18,27 +18,8 @@ export class SoundBite extends LitElement {
   // but don't give it a default value please (initial only otherwise problems happen, paused would prob be ok as well)
   // audioState should be initial, playing, or paused (mainly playing or paused)
   @property({ type: String, reflect: true })
-  audioState: "initial" | "playing" | "paused" = "initial";
+  audioState: "playing" | "paused" = "paused";
 
-  // this.name is not reactive here
-  // TODO fix so that the name change is correctly reflected
-  @property({ type: String, attribute: false })
-  playingAriaLabel: string = `Pause sound ${this.name}`;
-  @property({ type: String, attribute: false })
-  pausedAriaLabel: string = `Resume sound ${this.name}`;
-  @property({ type: String, attribute: false })
-  finishedAriaLabel: string = `Play sound ${this.name}`;
-  @property({ type: String, attribute: false })
-  playingIcon = "⏸️";
-  @property({ type: String, attribute: false })
-  pausedIcon = "▶️";
-  @property({ type: String, attribute: false })
-  finishedIcon = "▶️";
-
-  @state()
-  protected _icon: string = this.finishedIcon;
-  @state()
-  protected _ariaLabel: string = this.finishedAriaLabel;
   @state()
   protected _audio: HTMLAudioElement | null = null;
   @state()
@@ -46,6 +27,8 @@ export class SoundBite extends LitElement {
   @state()
   protected _loadAudio = false;
 
+  playIcon = "▶️";
+  pauseIcon = "⏸️";
   protected _observer: IntersectionObserver | null = null;
 
   // pretty sure that the audio events should bubble up without needing to do anything
@@ -69,9 +52,7 @@ export class SoundBite extends LitElement {
         );
       });
       this._audio.addEventListener("ended", () => {
-        this.audioState = "initial";
-        this._ariaLabel = this.finishedAriaLabel;
-        this._icon = this.finishedIcon;
+        this.audioState = "paused";
       });
     },
     // the as const helps ts infer the type correctly
@@ -83,18 +64,16 @@ export class SoundBite extends LitElement {
     if (this.audioState === "playing") {
       this._audio.pause();
       this.audioState = "paused";
-      this._ariaLabel = this.pausedAriaLabel;
-      this._icon = this.pausedIcon;
     } else {
       this._audio.play();
       this.audioState = "playing";
-      this._ariaLabel = this.playingAriaLabel;
-      this._icon = this.playingIcon;
     }
   }
 
   connectedCallback(): void {
     super.connectedCallback();
+    // make sure that the animation doesn't start
+    this.audioState = "paused";
     if (this.prefetchStrategy === "intersection") {
       this._observer = new IntersectionObserver(
         (entries) => {
@@ -125,12 +104,6 @@ export class SoundBite extends LitElement {
       }
     }
 
-    @property --soundbite-bg-scale {
-      inherits: true;
-      initial-value: 0;
-      syntax: "<number>";
-    }
-
     /**
     * [1] - sets the block offset of the bg
     * [2] - sets the initial bg size
@@ -149,6 +122,8 @@ export class SoundBite extends LitElement {
         var(--_bg-height)
       ); /* [2] */
       --_initial-padding: var(--initial-padding, 0.3ch); /* [3] */
+      --_focus-outline: var(--focus-outline, 2px solid currentColor);
+      --_focus-outline-offset: var(--focus-outline-offset, 2px);
 
       position: relative;
       display: inline-block;
@@ -163,6 +138,11 @@ export class SoundBite extends LitElement {
       background-color: unset;
       font: inherit;
       isolation: isolate;
+
+      &:focus-visible {
+        outline: var(--_focus-outline);
+        outline-offset: var(--_focus-outline-offset);
+      }
 
       &::before,
       &::after {
@@ -240,15 +220,32 @@ export class SoundBite extends LitElement {
     // intersection will be handled in the connectedCallback and the disconnectedCallback
   }
 
+  getCurrentIcon(): HTMLTemplateResult {
+    if (this.audioState === "playing") {
+      return html`<slot name="pause-icon">${this.pauseIcon}</slot>`;
+    } else {
+      return html`<slot name="play-icon">${this.playIcon}</slot>`;
+    }
+  }
+
+  getAriaLabel(): string {
+    if (this.audioState === "playing") {
+      return `Pause sound ${this.name}`;
+    } else {
+      return `Play sound ${this.name}`;
+    }
+    // TODO add resume label
+  }
+
   render() {
     return html`<button
-      aria-label="${this._ariaLabel}"
+      aria-label="${this.getAriaLabel()}"
       class="${`soundbite`}"
       style="${`--sound-duration: ${this._duration}s;`}"
       audio-state="${this.audioState}"
       @click="${this._onClick}"
     >
-      ${this._icon} ${this.name}
+      ${this.getCurrentIcon()}<slot>${this.name}</slot>
     </button>`;
   }
 }

@@ -4,7 +4,7 @@ A web component for simply, performantly, and accessibly adding inline sound bit
 
 This web component was made using Lit. I was inspired by [Soundcite](https://soundcite.knightlab.com). My goal for this project was to create a version that could be self hosted, was more accessible, and used modern technologies.
 
-This component was built using [Lit`](https://lit.dev).
+This component was built using [Lit](https://lit.dev).
 
 ## Usage
 

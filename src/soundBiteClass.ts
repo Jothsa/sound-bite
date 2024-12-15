@@ -18,6 +18,9 @@ export class SoundBite extends LitElement {
   // but don't give it a default value please (initial only otherwise problems happen, paused would prob be ok as well)
   // audioState should be initial, playing, or paused (mainly playing or paused)
   @property({ type: String, reflect: true })
+  // * In addition to the audioState on the sound-bite element, the button has the audio-state attribute which has the same value
+  // * This is bc I'm lazy and don't want to break out of my nesting to adjust the button styles based on the audio state
+  
   audioState: "playing" | "paused" = "paused";
 
   @state()
@@ -228,19 +231,19 @@ export class SoundBite extends LitElement {
     }
   }
 
-  getAriaLabel(): string {
-    if (this.audioState === "playing") {
-      return `Pause sound ${this.name}`;
-    } else {
-      return `Play sound ${this.name}`;
-    }
-    // TODO add resume label
-  }
+  // I don't think the label change is read aloud by screen readers so I'm going to change the label to say play/pause
+  // getAriaLabel(): string {
+  //   if (this.audioState === "playing") {
+  //     return `Pause sound ${this.name}`;
+  //   } else {
+  //     return `Play sound ${this.name}`;
+  //   }
+  // }
 
   render() {
     return html`<button
-      aria-label="${this.getAriaLabel()}"
-      class="${`soundbite`}"
+      aria-label="Play or pause ${this.name}"
+      class="soundbite"
       style="${`--sound-duration: ${this._duration}s;`}"
       audio-state="${this.audioState}"
       @click="${this._onClick}"

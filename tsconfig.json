@@ -11,14 +11,14 @@
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "moduleDetection": "force",
-    
+
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
-    
+
     /* Packaging */
     "moduleResolution": "node",
     "declaration": true,
@@ -26,5 +26,5 @@
     "declarationMap": true,
     "outDir": "dist"
   },
-  "include": ["src"]
+  "include": ["src/**/*.ts"]
 }

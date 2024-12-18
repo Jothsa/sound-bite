@@ -3,6 +3,8 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   build: {
+    // otherwise the tsc d.ts files are deleted
+    emptyOutDir: false,
     lib: {
       entry: {
         "sound-bite": resolve(__dirname, "src/sound-bite.ts"),

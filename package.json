@@ -5,12 +5,12 @@
   "type": "module",
   "exports": {
     ".": {
-      "main": "./src/sound-bite.js",
-      "types": "./src/sound-bite.d.ts"
+      "main": "./dist/sound-bite.js",
+      "types": "./dist/sound-bite.d.ts"
     },
     "./soundBiteClass.js": {
-      "main": "./src/soundBiteClass.js",
-      "types": "./src/soundBiteClass.d.ts"
+      "main": "./dist/soundBiteClass.js",
+      "types": "./dist/soundBiteClass.d.ts"
     }
   },
   "scripts": {

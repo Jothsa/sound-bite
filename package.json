@@ -4,8 +4,14 @@
   "version": "1.0.0",
   "type": "module",
   "exports": {
-    ".": "./src/sound-bite.js",
-    "./soundBiteClass.js": "./src/soundBiteClass.js"
+    ".": {
+      "main": "./src/sound-bite.js",
+      "types": "./src/sound-bite.d.ts"
+    },
+    "./soundBiteClass.js": {
+      "main": "./src/soundBiteClass.js",
+      "types": "./src/soundBiteClass.d.ts"
+    }
   },
   "scripts": {
     "dev": "vite",
@@ -17,6 +23,7 @@
     "lit": "^3.2.1"
   },
   "devDependencies": {
+    "@types/node": "^22.10.2",
     "typescript": "~5.7.2",
     "vite": "^6.0.1"
   }

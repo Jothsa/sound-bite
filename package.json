@@ -3,12 +3,8 @@
   "private": false,
   "version": "1.0.4",
   "type": "module",
-  "exports": {
-    ".": {
-      "default": "./dist/sound-bite.js",
-      "types": "./dist/sound-bite.d.ts"
-    }
-  },
+  "exports": "./dist/sound-bite.js",
+  "types": "./dist/sound-bite.d.ts",
   "files": [
     "dist"
   ],

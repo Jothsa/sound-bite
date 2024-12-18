@@ -1,7 +1,7 @@
 {
   "name": "@jothsa/sound-bite",
   "private": false,
-  "version": "1.0.3",
+  "version": "1.0.4",
   "type": "module",
   "exports": {
     ".": {
@@ -9,7 +9,9 @@
       "types": "./dist/sound-bite.d.ts"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

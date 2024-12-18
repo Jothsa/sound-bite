@@ -7,12 +7,9 @@
     ".": {
       "default": "./dist/sound-bite.js",
       "types": "./dist/sound-bite.d.ts"
-    },
-    "./soundBiteClass.js": {
-      "default": "./dist/soundBiteClass.js",
-      "types": "./dist/soundBiteClass.d.ts"
     }
   },
+  "files": ["dist"],
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

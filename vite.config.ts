@@ -6,10 +6,7 @@ export default defineConfig({
     // otherwise the tsc d.ts files are deleted
     emptyOutDir: false,
     lib: {
-      entry: {
-        "sound-bite": resolve(__dirname, "src/sound-bite.ts"),
-        soundBiteClass: resolve(__dirname, "src/soundBiteClass.ts"),
-      },
+      entry:"src/sound-bite.ts",
       formats: ["es"]
     },
     minify: false,

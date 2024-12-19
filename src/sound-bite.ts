@@ -2,6 +2,31 @@ import { CSSResult, HTMLTemplateResult, LitElement, css, html } from "lit";
 import { property, state } from "lit/decorators.js";
 import { Task } from "@lit/task";
 
+// maybe disable until sound is loaded?
+
+/**
+ * A simple inline audio component. This uses an HTML Audio element internally, so the audio element events should bubble up through this component. It doesn't handle wrapping well. It is designed for shorter audio clips.
+ *
+ * @element sound-bite
+ *
+ * @prop src - the audio file source. This is required.
+ * @prop name - The name of the sound. This will be used as the default content of the element as well as the aria-label.
+ * @prop prefetchStrategy - When to load the audio file. If the file is not loaded, clicking will have no effect. Hover will load the audio when the user hovers over the element (this could be risky if the sound is large and can't be loaded before clicked). Intersection will load the audio when the element is 50% visible in the viewport. Load will load the audio as soon as the element is connected. Defaults to intersection.
+ * @prop audioState - Don't give audioState a default value. (If it is manually set to "playing", the css anim tries to run  when the sound isn't loaded which causes issues.)
+ *
+ * @slot - The default slot has the name of the sound by default (from the name attribute).
+ * @slot pause-icon - This slot will be shown when the sound is playing. Defaults to the pause emoji, ⏸️.
+ * @slot play-icon - This slot will be shown when the sound is paused. Defaults to the play emoji, ▶️.
+ *
+ * @cssprop [--bg-block-offset=0lh] - The block offset of the background.
+ * @cssprop [--bg-color=grey] - The background color of the soundbite.
+ * @cssprop [--bg-height=1lh] - The height of the background.
+ * @cssprop [--initial-bg-inline-size=0.5ch] - The initial background inline size.
+ * @cssprop [--initial-bg-block-size=var(--bg-height)] - The initial background block size.
+ * @cssprop [--initial-padding=0.3ch] - The padding between the initial background and the icon/text.
+ * @cssprop [--focus-outline=2px solid currentColor] - The focus outline.
+ * @cssprop [--focus-outline-offset=2px] - The focus outline offset.
+ */
 // I don't want to call define in the main file bc that causes problems when importing server side
 // if the user manually seeks the audio it'll mess up a bit prob also if they play/pause it
 export class SoundBite extends LitElement {
@@ -13,10 +38,10 @@ export class SoundBite extends LitElement {
   // click isn't supported since I can't have the sound play after it's loaded very easily
   // hover could be risky if the sound is large
   // clicks will have no effect if the sound is not loaded
+
   @property({ type: String })
   prefetchStrategy: "hover" | "intersection" | "load" = "intersection";
-  // but don't give it a default value please (initial only otherwise problems happen, paused would prob be ok as well)
-  // audioState should be initial, playing, or paused (mainly playing or paused)
+  // don't give audioState a default value bc problems (tries to run the css anim when the sound isn't loaded) happen (paused is prob ok)
   @property({ type: String, reflect: true })
   // * In addition to the audioState on the sound-bite element, the button has the audio-state attribute which has the same value
   // * This is bc I'm lazy and don't want to break out of my nesting to adjust the button styles based on the audio state
@@ -29,8 +54,8 @@ export class SoundBite extends LitElement {
   @state()
   protected _loadAudio = false;
 
-  playIcon = "▶️";
-  pauseIcon = "⏸️";
+  protected _playIcon = "▶️";
+  protected _pauseIcon = "⏸️";
   protected _observer: IntersectionObserver | null = null;
 
   // pretty sure that the audio events should bubble up without needing to do anything
@@ -207,6 +232,7 @@ export class SoundBite extends LitElement {
 
   constructor() {
     super();
+    // This should probably be in the connected callback or is the constructor ok?
     if (this.prefetchStrategy === "load") {
       this._loadAudio = true;
     } else if (this.prefetchStrategy === "hover") {
@@ -222,11 +248,11 @@ export class SoundBite extends LitElement {
     // intersection will be handled in the connectedCallback and the disconnectedCallback
   }
 
-  getCurrentIcon(): HTMLTemplateResult {
+  protected _getCurrentIcon(): HTMLTemplateResult {
     if (this.audioState === "playing") {
-      return html`<slot name="pause-icon">${this.pauseIcon}</slot>`;
+      return html`<slot name="pause-icon">${this._pauseIcon}</slot>`;
     } else {
-      return html`<slot name="play-icon">${this.playIcon}</slot>`;
+      return html`<slot name="play-icon">${this._playIcon}</slot>`;
     }
   }
 
@@ -241,13 +267,14 @@ export class SoundBite extends LitElement {
 
   render() {
     return html`<button
-      aria-label="Play or pause ${this.name}"
+      aria-label="Play or pause ${this.name ||
+      "the sound"} duration: ${this._duration?.toFixed(1) || "loading"} seconds"
       class="soundbite"
-      style="${`--sound-duration: ${this._duration}s;`}"
+      style="${`--sound-duration: ${this._duration?.toFixed(1)}s;`}"
       audio-state="${this.audioState}"
       @click="${this._onClick}"
     >
-      ${this.getCurrentIcon()}<slot>${this.name}</slot>
+      ${this._getCurrentIcon()}<slot>${this.name}</slot>
     </button>`;
   }
 }

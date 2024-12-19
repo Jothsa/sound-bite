@@ -59,4 +59,4 @@ This component should work in all browsers that support web components and css n
 
 ## Known Issues
 
-This component doesn't handle line wrapping very well. Try to keep it on one line if possible.
+This component doesn't handle line wrapping very well. Try to keep it on one line if possible. It also acts weird if the user manually seeks the audio.

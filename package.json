@@ -11,7 +11,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "docs:gen": "pnpm dlx web-component-analyzer src --outFile custom-elements.json"
   },
   "dependencies": {
     "@lit/task": "^1.0.1",

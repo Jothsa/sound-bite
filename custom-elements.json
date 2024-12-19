@@ -1,0 +1,120 @@
+{
+  "version": "experimental",
+  "tags": [
+    {
+      "name": "sound-bite",
+      "path": "./src/sound-bite.ts",
+      "description": "A simple inline audio component;",
+      "attributes": [
+        {
+          "name": "src",
+          "type": "string",
+          "default": "\"\""
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "default": "\"\""
+        },
+        {
+          "name": "audioState",
+          "type": "\"playing\" | \"paused\"",
+          "default": "\"paused\""
+        },
+        {
+          "name": "prefetchStrategy",
+          "description": "When to load the audio file. If the file is not loaded, clicking will have no effect.",
+          "type": "String",
+          "default": "\"intersection\""
+        },
+        {
+          "name": "disabled",
+          "description": "This jsdoc tag documents an attribute.",
+          "type": "Boolean"
+        },
+        {
+          "name": "switch",
+          "description": "Here is an attribute with either the \"on\" or \"off\" value.",
+          "type": "on|off"
+        },
+        {
+          "name": "my-attr",
+          "default": "\"default value\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "src",
+          "attribute": "src",
+          "type": "string",
+          "default": "\"\""
+        },
+        {
+          "name": "name",
+          "attribute": "name",
+          "type": "string",
+          "default": "\"\""
+        },
+        {
+          "name": "audioState",
+          "attribute": "audioState",
+          "type": "\"playing\" | \"paused\"",
+          "default": "\"paused\""
+        },
+        {
+          "name": "styles",
+          "type": "CSSResult",
+          "default": "\"css`\\n    @keyframes scale-in-x {\\n      from {\\n        scale: 0 1;\\n      }\\n\\n      to {\\n        scale: 1 1;\\n      }\\n    }\\n\\n    /**\\n    * [1] - sets the block offset of the bg\\n    * [2] - sets the initial bg size\\n    * [3] - sets the padding between the initial bg and the icon/text\\n    * TODO test text wrapping\\n    * * the props need a unit to be valid in calcs\\n    */\\n\\n    .soundbite {\\n      --_bg-block-offset: var(--bg-block-offset, 0lh); /* [1] */\\n      --_bg-color: var(--bg-color, grey);\\n      --_bg-height: var(--bg-height, 1lh);\\n      --_initial-bg-inline-size: var(--initial-bg-inline-size, 0.5ch); /* [2] */\\n      --_initial-bg-block-size: var(\\n        --initial-bg-block-size,\\n        var(--_bg-height)\\n      ); /* [2] */\\n      --_initial-padding: var(--initial-padding, 0.3ch); /* [3] */\\n      --_focus-outline: var(--focus-outline, 2px solid currentColor);\\n      --_focus-outline-offset: var(--focus-outline-offset, 2px);\\n\\n      position: relative;\\n      display: inline-block;\\n      block-size: 1lh;\\n      padding: 0;\\n      padding-inline-start: var(\\n        --_initial-padding,\\n        var(--_initial-bg-inline-size, 0ch)\\n      );\\n      border: transparent;\\n      margin: 0;\\n      background-color: unset;\\n      font: inherit;\\n      isolation: isolate;\\n\\n      &:focus-visible {\\n        outline: var(--_focus-outline);\\n        outline-offset: var(--_focus-outline-offset);\\n      }\\n\\n      &::before,\\n      &::after {\\n        position: absolute;\\n        z-index: -1;\\n        inset-block-end: var(--_bg-block-offset);\\n        background-color: var(--_bg-color);\\n        content: \\\"\\\";\\n      }\\n\\n      /**\\n      * the playing-bg, animates to show progress of sound when playing\\n      * is this ok for prefers-reduced-motion? \\n      * [1] - offset the initial bg position so that it doesn't look like nothing is moving for part of the animation\\n              (1px helps with gaps) \\n      */\\n      &::before {\\n        inset-inline-start: calc(\\n          var(--_initial-bg-inline-size) - 1px\\n        ); /* [1] */\\n        inset-inline-end: 0;\\n        block-size: var(--_bg-height);\\n        scale: 0 1;\\n        transform-origin: left center;\\n      }\\n\\n      /**\\n      * the initial bg\\n      * faking the initial bg makes it easier to keep the size of this initial bg the same no matter the text length \\n      * [1] - make sure it connects to the playing bg if the playing bg is offset\\n      */\\n      &::after {\\n        position: absolute;\\n        z-index: -1;\\n        inset-block-end: 0;\\n        inset-inline-start: 0;\\n        inline-size: var(--_initial-bg-inline-size);\\n        block-size: var(--_initial-bg-block-size); /* [1] */\\n      }\\n\\n      /* applying the animation here lets it restart with every press and only play once */\\n      &[audio-state=\\\"playing\\\"]::before,\\n      &[audio-state=\\\"paused\\\"]::before {\\n        animation: scale-in-x var(--sound-duration) linear 1;\\n      }\\n\\n      &[audio-state=\\\"playing\\\"] {\\n        &::before {\\n          animation-play-state: running;\\n        }\\n      }\\n\\n      &[audio-state=\\\"paused\\\"] {\\n        &::before {\\n          animation-play-state: paused;\\n        }\\n      }\\n    }\\n  `\""
+        },
+        {
+          "name": "prefetchStrategy",
+          "attribute": "prefetchStrategy",
+          "description": "When to load the audio file. If the file is not loaded, clicking will have no effect.",
+          "type": "String",
+          "default": "\"intersection\""
+        },
+        {
+          "name": "value"
+        }
+      ],
+      "events": [
+        {
+          "name": "change",
+          "description": "This jsdoc tag makes it possible to document events."
+        },
+        {
+          "name": "submit"
+        }
+      ],
+      "slots": [
+        {
+          "name": "",
+          "description": "The default slot has the name of the sound by default."
+        },
+        {
+          "name": "pause-icon",
+          "description": "This slot will be shown when the sound is playing. Defaults to the pause emoji, ⏸️."
+        },
+        {
+          "name": "play-icon",
+          "description": "This slot will be shown when the sound is paused. Defaults to the play emoji, ▶️."
+        }
+      ],
+      "cssProperties": [
+        {
+          "name": "--main-bg-color",
+          "description": "This jsdoc tag can be used to document css custom properties."
+        },
+        {
+          "name": "--main-color",
+          "default": "\"red\""
+        }
+      ],
+      "cssParts": [
+        {
+          "name": "container"
+        }
+      ]
+    }
+  ]
+}

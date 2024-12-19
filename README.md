@@ -43,7 +43,7 @@ window.customElements.define("my-named-sound-bite", SoundBite);
 ></sound-bite>
 ```
 
-See the complete component analysis (generated using [web-component-analyzer](https://github.com/runem/web-component-analyzer)) [here](./docs.md).
+See the complete component docs (generated using [web-component-analyzer](https://github.com/runem/web-component-analyzer)) [here](./docs.md).
 
 ## Accessibility
 
@@ -55,7 +55,7 @@ I have tried to keep this component pretty simple. If you want to customize it f
 
 ## Compatibility
 
-This component should work in all browsers that support web components and css nesting.
+This component should work in all browsers that support web components and css nesting. Javascript is required. However, if web components are not supported or js is not enabled, the component will not render which is not the end of the world. However, to provide a better fallback, add the name of the sound in the default slot of the component.
 
 ## Known Issues
 

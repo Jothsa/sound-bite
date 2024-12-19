@@ -1,7 +1,7 @@
 {
   "name": "@jothsa/sound-bite",
   "private": false,
-  "version": "1.0.5",
+  "version": "1.1.0",
   "type": "module",
   "exports": "./dist/sound-bite.js",
   "types": "./dist/sound-bite.d.ts",

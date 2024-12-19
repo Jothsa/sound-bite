@@ -43,7 +43,7 @@ window.customElements.define("my-named-sound-bite", SoundBite);
 ></sound-bite>
 ```
 
-See the complete component analysis (generated using [web-component-analyzer](https://github.com/runem/web-component-analyzer)) attributes [here](./docs.md).
+See the complete component analysis (generated using [web-component-analyzer](https://github.com/runem/web-component-analyzer)) [here](./docs.md).
 
 ## Accessibility
 

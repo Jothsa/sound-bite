@@ -12,7 +12,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "docs:gen": "pnpm dlx web-component-analyzer src --outFile custom-elements.json"
+    "docs:gen": "pnpm dlx web-component-analyzer src --outFile custom-elements.json && pnpm dlx web-component-analyzer src --outFile docs.md && cp custom-elements.json ./dist/",
+    "prepublishOnly": "pnpm build && pnpm docs:gen"
   },
   "dependencies": {
     "@lit/task": "^1.0.1",
